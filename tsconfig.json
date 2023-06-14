@@ -4,7 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "importHelpers": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
