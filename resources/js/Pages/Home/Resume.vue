@@ -7,21 +7,12 @@
                 </button>
             </header>
             <footer class="p-4 flex-grow overflow-y-auto">
-                <aside class="print h-[297mm]">
-                    <div>
-                        <h3 class="text-xl text-gray-500">
-                            Aziz Mardonovich
-                        </h3>
-                        <p class="text-xs text-gray-400">
-                            Laravel & Vue - Developer
-                        </p>
-                    </div>
-                </aside>
+                <ResumeVariantOne />
             </footer>
         </main>
     </section>
 </template>
 
 <script setup lang="ts">
-
+import ResumeVariantOne from '@/Components/ResumeVariantOne.vue'
 </script>
