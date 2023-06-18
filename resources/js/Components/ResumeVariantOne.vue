@@ -427,7 +427,12 @@
 </template>
 
 <script setup lang="ts">
+import axios from '@/modules/axios'
 function download(){
     print()
 }
+
+axios.get('user-languages').then(({data}) => {
+    console.log(data)
+})
 </script>

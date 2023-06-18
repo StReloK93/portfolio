@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('contacts');
             $table->text('sitelink');
+            $table->text('statement');
             $table->timestamps();
         });
     }

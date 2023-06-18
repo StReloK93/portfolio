@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('recognitions', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->string('competition');
+            $table->string('position');
+            $table->string('location');
             $table->timestamps();
         });
     }

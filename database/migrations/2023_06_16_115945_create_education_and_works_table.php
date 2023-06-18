@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('education_and_works', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
+            $table->date('period_from');
+            $table->date('period_to');
+            $table->string('major');
+            $table->string('company');
             $table->timestamps();
         });
     }

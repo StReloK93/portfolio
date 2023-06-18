@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('hobbies', function (Blueprint $table) {
+        Schema::create('language_levels', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
-            $table->string('icon');
+            $table->integer('level');
             $table->string('name');
             $table->timestamps();
         });
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hobbies');
+        Schema::dropIfExists('language_levels');
     }
 };
