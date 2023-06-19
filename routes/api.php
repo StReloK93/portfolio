@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\LanguageSkillsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,16 +16,16 @@ use App\Http\Controllers\LanguageSkillsController;
 */
 
 
-Route::post('/login', [UserController::class, 'login']);
-Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('user/{id}', [UserController::class, 'index']);
 
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user-languages', [LanguageSkillsController::class, 'userLanguages']);
-    Route::get('/user', [UserController::class, 'getUser']);
-    Route::get('/logout', [UserController::class, 'logout']);
-    Route::post('/passwordreset', [UserController::class, 'passwordReset']);
+    Route::get('/user', [AuthController::class, 'getUser']);
+    Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/passwordreset', [AuthController::class, 'passwordReset']);
 
 
 });

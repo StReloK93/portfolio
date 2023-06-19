@@ -1,56 +1,20 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\PasswordResetRequest;
-use App\Services\UserService;
 use Illuminate\Http\Request;
-
+use App\Models\User;
 class UserController extends Controller
 {
-    public function __construct (UserService $userService) {
-
-        $this->service = $userService;
-
+    public function index($id){
+        $user = User::find($id);
+        $user->langskills;
+        $user->info;
+        $user->specialities;
+        $user->skills;
+        $user->hobbies;
+        $user->works;
+        $user->recognitions;
+        return $user;
     }
-
-
-    public function Login(LoginRequest $request)
-    {
-
-        return $this->service->login($request);
-    
-    }
-
-
-    public function register(RegisterRequest $request)
-    {
-        return $this->service->register($request);
-    }
-
-
-    public function logout(Request $request)
-    {
-        
-        return $this->service->logout($request);
-
-    }
-
-
-    public function getUser(Request $request){
- 
-        return $this->service->getUser($request);
-
-    }
-
-    public function passwordReset(PasswordResetRequest $request){
-        return $this->service->passwordReset($request);
-    }
-
-
-    public function logoutUser(Request $request){
-        return $request->user()->tokens()->where('id', $request->id)->delete();
-    }
-
 }

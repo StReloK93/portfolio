@@ -10,12 +10,12 @@ class LanguageSkills extends Model
     use HasFactory;
 
     protected $with = [
-        'langlevels'
+        'levels'
     ];
 
     protected $fillable = ['user_id','name','level'];
 
-    public function langlevels()
+    public function levels()
     {
         return $this->hasOne(LanguageLevel::class, 'level', 'level');
     }

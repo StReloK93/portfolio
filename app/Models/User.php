@@ -12,6 +12,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
+
+    // protected $with = [
+    //     'langskills'
+    // ];
     /**
      * The attributes that are mass assignable.
      *
@@ -48,4 +53,35 @@ class User extends Authenticatable
         return $this->hasMany(LanguageSkills::class);
     }
     
+    public function info()
+    {
+        return $this->hasOne(UserInfo::class);
+    }
+
+    public function specialities()
+    {
+        return $this->hasMany(Speciality::class);
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skills::class);
+    }
+
+    public function hobbies()
+    {
+        return $this->hasMany(Hobby::class);
+    }
+
+    public function works()
+    {
+        return $this->hasMany(EducationAndWorks::class)->orderBy('from', 'desc');
+    }
+
+
+    public function recognitions()
+    {
+        return $this->hasMany(Recognition::class);
+    }
 }
+

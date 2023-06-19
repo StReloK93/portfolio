@@ -17,8 +17,14 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->text('name');
+            $table->text('major');
+            $table->text('country');
+            $table->text('city');
             $table->text('address');
-            $table->text('contacts');
+            
+            $table->text('email');
+            $table->text('phone');
+            $table->text('telegram');
             $table->text('sitelink');
             $table->text('statement');
             $table->timestamps();
