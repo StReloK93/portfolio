@@ -20,3 +20,13 @@ async function init(){
     app.mount("#app")
 }
 init()
+
+
+
+// Salom!! Mening ismim Aziz. Men 1993-yil
+// Navoiy viloyati uchquduq shaxrida tug'ilganman.
+// Dasturlashga 2015 yilda universitietni 2 kursida
+// qiziqib qolganman. Shundan buyon bu sohada o'z bilimimni
+// oshirib kelaman. Ayni damda Fullstack dasturchiman  Internet
+// magazin CRM sistema , ERP sistema, telegram botlar va turli
+// xil xisob kitob dasturlarini ishlab chiqqanman.
