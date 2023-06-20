@@ -34,4 +34,10 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+#inspector-host input,
+#inspector-host select,
+#inspector-host textarea{
+  color: initial;
+}
 </style>

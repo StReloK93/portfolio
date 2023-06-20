@@ -9,7 +9,7 @@
     <title>Testing</title>
 </head>
 <body>
-    <section id="app"></section>
+    <section id="app" class="h-screen"></section>
     @vite(['resources/css/app.css', 'resources/js/app.ts'])
 </body>
 </html>

@@ -163,10 +163,10 @@
                 <div class="flex items-center justify-between text-xs">
                     <main v-for="langskill in  user?.langskills"
                         :class="{
-                            'border-t-gray-600': langskill.level > 0,
-                            'border-r-gray-600': langskill.level > 1,
-                            'border-b-gray-600': langskill.level > 2,
-                            'border-l-gray-600': langskill.level > 3,
+                            'border-t-gray-800': langskill.level > 0,
+                            'border-r-gray-800': langskill.level > 1,
+                            'border-b-gray-800': langskill.level > 2,
+                            'border-l-gray-800': langskill.level > 3,
                         }"
                         class="w-24 h-24 flex justify-center items-center border-[8px] rounded-full border-gray-300 rotate-45">
                         <div class="-rotate-45 text-center leading-none">

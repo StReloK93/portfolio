@@ -79,7 +79,12 @@ class DatabaseSeeder extends Seeder
             'phone' => '+99893 660 09 60',
             'telegram' => '@ruzzifer',
             'sitelink' => 'ruzzifer.site',
-            'statement' => 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis reprehenderit consectetur enim quos aut porro, corporis sit iste rerum, ipsum excepturi placeat architecto maiores deserunt saepe dolorum non eum similique.',
+            'statement' => "Hi. My name is Aziz. I was born  in 1993year, in the city of Uchkuduk,
+                            Navai region. In 2015,when i studied second grade of university, I was interested in
+                            programming.Since then , my knowledge in this field I'll increase. In these days,
+                            I am a Fullstack developer, on the Internet
+                            magazine CRM system, ERP system, telegram bots and others
+                            I have developed various spreadsheet programs",
         ]);
 
         Speciality::insert([
