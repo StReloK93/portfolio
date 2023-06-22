@@ -30,3 +30,5 @@ init()
 // oshirib kelaman. Ayni damda Fullstack dasturchiman  Internet
 // magazin CRM sistema , ERP sistema, telegram botlar va turli
 // xil xisob kitob dasturlarini ishlab chiqqanman.
+
+//Portfolio 

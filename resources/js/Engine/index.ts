@@ -1,4 +1,4 @@
-import { Engine, Scene, ArcRotateCamera, Vector3, HemisphericLight, NodeMaterial, Color4, Color3, SceneLoader, PointLight, StandardMaterial, ShadowGenerator, DirectionalLight } from "@babylonjs/core"
+import { Engine, Scene, ArcRotateCamera, Vector3, NodeMaterial, Color4, Color3, SceneLoader, PointLight, StandardMaterial, ShadowGenerator, DirectionalLight, PBRMaterial } from "@babylonjs/core"
 import { toon, toonImage } from "./Materials/ToonMaterial"
 import "@babylonjs/materials"
 import "@babylonjs/loaders"
@@ -8,129 +8,73 @@ export function initScene(canvas) {
     const engine = new Engine(canvas, true)
     const scene = new Scene(engine)
     scene.ambientColor = new Color3(1, 1, 1)
-    scene.clearColor = new Color4(1, 0.35, 0, 1)
-    // scene.debugLayer.show()
-    const camera = new ArcRotateCamera('MainCamera', -0.1, 1.2, 20, new Vector3(3, 0, -3), scene)
-    camera.attachControl(canvas, true);
-    const sun = new PointLight("light", new Vector3(0.124, -0.831, 0.542), scene)
-    sun.position = new Vector3(10, 30, -10)
-    sun.intensity = 1
+    scene.clearColor = new Color4(0.8, 0.8, 0.8, 1)
+
+    const camera = new ArcRotateCamera('camera', 1.5745, 1.5816, 6.8, new Vector3(0, 3.3, 0), scene)
+    
+    camera.attachControl(canvas, true)
+    camera.fov = 0.7
 
 
-    const shadowGenerator = new ShadowGenerator(1024, sun, true);
-    shadowGenerator.useExponentialShadowMap  = true
+    // const sun = new DirectionalLight("light", new Vector3(-1, -1.4, 1.5), scene)
+    // sun.intensity
+    const light = new PointLight("light", new Vector3(-1, -1.4, 1.5), scene)
 
 
+    light.position = new Vector3(0, 4.7, 0)
+    light.intensity = 20
 
-    // scene.debugLayer.show()
+
+    const shadowGenerator = new ShadowGenerator(1024, light, true);
+    shadowGenerator.usePercentageCloserFiltering = true
+    shadowGenerator.filteringQuality = ShadowGenerator.QUALITY_HIGH;
+
     SceneLoader.ImportMesh("", "/models/", "test.glb", scene, function (meshes, particleSystems, skeletons) {
 
-        // do something with the meshes and skeletons
         meshes.forEach((mesh) => {
-            shadowGenerator.getShadowMap().renderList.push(mesh);
-            mesh.receiveShadows = true;
-            if(mesh.name == 'keyboards'){
-                mesh.material = new StandardMaterial(mesh.name)
-            } 
-            else{
-                const material = new StandardMaterial(mesh.name)
-                material.ambientColor = new Color3(0.2,0.2,0.2)
-                mesh.material = material
+
+            if(mesh.name == 'window_glass') {
+                mesh.material.alpha = 0.3
+                mesh.material.transparencyMode = 2
             }
-            shadowGenerator.useBlurCloseExponentialShadowMap = true;
-            shadowGenerator.forceBackFacesOnly = true;
-            shadowGenerator.blurKernel = 32;
-            shadowGenerator.useKernelBlur = true;
-            sun.shadowMinZ = 0
-            sun.shadowMaxZ = 60
+            shadowGenerator.getShadowMap().renderList.push(mesh);
+            mesh.receiveShadows = true
+            const material = mesh.material as PBRMaterial
+            if(material) material.ambientColor = new Color3(0.5,0.5,0.5)
         })
 
-        // particleSystems are always null for glTF assets
     });
-    engine.runRenderLoop(() => scene.render())
-    // Watch for browser/canvas resize events
-    window.addEventListener("resize", () => engine.resize())
 
+
+
+
+    engine.runRenderLoop(() => scene.render())
+    addEventListener("resize", () => engine.resize())
 }
 
 
-// if(mesh.name == 'keyboards'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.7, 0.7, 0.7),
-//         ambient: new Color3(0.3, 0.3, 0.3),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(0.4, 0.4, 0.4),
-//     })
-// }
-// else if(mesh.name == 'keyboard'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.6, 0.6, 0.6),
-//         ambient: new Color3(0.35, 0.35, 0.35),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'mouse'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.65, 0.65, 0.65),
-//         ambient: new Color3(0.3, 0.3, 0.3),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'monitor_black'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.05, 0.05, 0.05),
-//         ambient: new Color3(0.35, 0.35, 0.35),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'monitor'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.7, 0.7, 0.7),
-//         ambient: new Color3(0.35, 0.35, 0.35),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'monitor-str'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.6, 0.6, 0.6),
-//         ambient: new Color3(0.35, 0.35, 0.35),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'table_top' || mesh.name == 'table_down'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.8, 0.6, 0.3),
-//         ambient: new Color3(0.5, 0.5, 0.5),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(1, 1, 1),
-//     })
-// }
-// else if(mesh.name == 'wall'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.7, 0.5, 0.4),
-//         ambient: new Color3(0.4, 0.4, 0.4),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(0, 0, 0),
-//     })
-// }
-// else if(mesh.name == 'floor'){
-//     mesh.material = toon({
-//         diffuse: new Color3(0.6, 0.6, 0.6),
-//         ambient: new Color3(0.3, 0.3, 0.3),
-//         rimLight: new Color3(0.025, 0.025, 0.025),
-//         specular: new Color3(0.025, 0.025, 0.025),
-//     })
-// }
 
-
-// else mesh.material = toon({
-//     diffuse: new Color3(Math.random(), Math.random(), Math.random()),
-//     ambient: new Color3(0.35, 0.35, 0.35),
-//     rimLight: new Color3(0.025, 0.025, 0.025),
-//     specular: new Color3(1, 1, 1),
-// })
+const colors = {
+    wall: new Color3(0.93,0.9,1),
+    floor: new Color3(1,0.95,0.95),
+    table_top: new Color3(1,0.9,0.8),
+    table_down: new Color3(1,0.9,0.8),
+    mouse: new Color3(0.8,0.8,0.8),
+    keyboards: new Color3(0.8,0.8,0.8),
+    monitor_black: new Color3(0.1,0.1,0.1),
+    monitor: new Color3(0.8,0.8,0.8),
+    monitor_str: new Color3(0.8,0.8,0.8),
+    luminaire_bottom: new Color3(0.3,0.6,1),
+    luminaire_head: new Color3(0.3,0.6,1),
+    cup: new Color3(1,0.1,0.1),
+    cup_liquid: new Color3(0.1,0.1,0.1),
+    main_book: new Color3(0.1,0.1,0.1),
+    book_panel: new Color3(1,0.9,0.8),
+    book_1: new Color3(0.4,0.7,0.4),
+    book_2: new Color3(0.8,0.5,0.3),
+    book_3: new Color3(0.5,0.5,1),
+    book_4: new Color3(1,0.4,0.4),
+    book_5: new Color3(1,0.95,0.95),
+    book_6: new Color3(0.2,0.5,0.5),
+    book_7: new Color3(1,0.95,0.95),
+}
