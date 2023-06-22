@@ -16,13 +16,12 @@ export function initScene(canvas) {
     camera.fov = 0.7
 
 
-    // const sun = new DirectionalLight("light", new Vector3(-1, -1.4, 1.5), scene)
-    // sun.intensity
+    const sun = new DirectionalLight("light", new Vector3(-1, -1.4, 1.5), scene)
     const light = new PointLight("light", new Vector3(-1, -1.4, 1.5), scene)
 
 
     light.position = new Vector3(0, 4.7, 0)
-    light.intensity = 20
+    light.intensity = 30
 
 
     const shadowGenerator = new ShadowGenerator(1024, light, true);
@@ -40,7 +39,7 @@ export function initScene(canvas) {
             shadowGenerator.getShadowMap().renderList.push(mesh);
             mesh.receiveShadows = true
             const material = mesh.material as PBRMaterial
-            if(material) material.ambientColor = new Color3(0.5,0.5,0.5)
+            if(material) material.ambientColor = new Color3(0.6,0.6,0.6)
         })
 
     });
