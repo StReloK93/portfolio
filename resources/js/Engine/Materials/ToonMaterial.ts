@@ -20,6 +20,16 @@ import {
     VertexOutputBlock,
     TextureBlock,
     Texture,
+    MorphTargetsBlock,
+    BonesBlock,
+    LightBlock,
+    MaxBlock,
+    InstancesBlock,
+    MinBlock,
+    NegateBlock,
+    SubtractBlock,
+    ColorSplitterBlock,
+    ColorMergerBlock,
 } from '@babylonjs/core'
 
 export function toon(Materials) {
@@ -416,17 +426,17 @@ export function toon(Materials) {
 
 
 
-export function toonImage(){
-    
+export function toonImage() {
+
     var nodeMaterial = new NodeMaterial("node");
-    
+
     // InputBlock
     var position = new InputBlock("position");
     position.visibleInInspector = false;
     position.visibleOnFrame = false;
     position.target = 1;
     position.setAsAttribute("position");
-    
+
     // TransformBlock
     var worldPos = new TransformBlock("worldPos");
     worldPos.visibleInInspector = false;
@@ -434,14 +444,14 @@ export function toonImage(){
     worldPos.target = 1;
     worldPos.complementZ = 0;
     worldPos.complementW = 1;
-    
+
     // InputBlock
     var world = new InputBlock("world");
     world.visibleInInspector = false;
     world.visibleOnFrame = false;
     world.target = 1;
     world.setAsSystemValue(NodeMaterialSystemValues.World);
-    
+
     // TransformBlock
     var Worldnormal = new TransformBlock("World normal");
     Worldnormal.visibleInInspector = false;
@@ -449,93 +459,93 @@ export function toonImage(){
     Worldnormal.target = 1;
     Worldnormal.complementZ = 0;
     Worldnormal.complementW = 0;
-    
+
     // InputBlock
     var normal = new InputBlock("normal");
     normal.visibleInInspector = false;
     normal.visibleOnFrame = false;
     normal.target = 1;
     normal.setAsAttribute("normal");
-    
+
     // VectorSplitterBlock
     var N = new VectorSplitterBlock("N");
     N.visibleInInspector = false;
     N.visibleOnFrame = false;
     N.target = 4;
-    
+
     // NormalizeBlock
     var NNormalized = new NormalizeBlock("N (Normalized)");
     NNormalized.visibleInInspector = false;
     NNormalized.visibleOnFrame = false;
     NNormalized.target = 4;
-    
+
     // DotBlock
     var NDotLDiffuseLightIntensity = new DotBlock("N Dot L (Diffuse Light Intensity)");
     NDotLDiffuseLightIntensity.visibleInInspector = false;
     NDotLDiffuseLightIntensity.visibleOnFrame = false;
     NDotLDiffuseLightIntensity.target = 4;
-    
+
     // NormalizeBlock
     var LNormalized = new NormalizeBlock("L (Normalized)");
     LNormalized.visibleInInspector = false;
     LNormalized.visibleOnFrame = false;
     LNormalized.target = 4;
-    
+
     // LightInformationBlock
     var Lightinformation = new LightInformationBlock("Light information");
     Lightinformation.visibleInInspector = false;
     Lightinformation.visibleOnFrame = false;
     Lightinformation.target = 1;
-    
+
     // AddBlock
     var H = new AddBlock("H");
     H.visibleInInspector = false;
     H.visibleOnFrame = false;
     H.target = 4;
-    
+
     // NormalizeBlock
     var VNormalized = new NormalizeBlock("V (Normalized)");
     VNormalized.visibleInInspector = false;
     VNormalized.visibleOnFrame = false;
     VNormalized.target = 4;
-    
+
     // ViewDirectionBlock
     var Viewdirection = new ViewDirectionBlock("View direction");
     Viewdirection.visibleInInspector = false;
     Viewdirection.visibleOnFrame = false;
     Viewdirection.target = 4;
-    
+
     // InputBlock
     var cameraPosition = new InputBlock("cameraPosition");
     cameraPosition.visibleInInspector = false;
     cameraPosition.visibleOnFrame = false;
     cameraPosition.target = 1;
     cameraPosition.setAsSystemValue(NodeMaterialSystemValues.CameraPosition);
-    
+
     // DotBlock
     var NDotV = new DotBlock("N Dot V");
     NDotV.visibleInInspector = false;
     NDotV.visibleOnFrame = false;
     NDotV.target = 4;
-    
+
     // OneMinusBlock
     var NDotV1 = new OneMinusBlock("1 - N Dot V");
     NDotV1.visibleInInspector = false;
     NDotV1.visibleOnFrame = false;
     NDotV1.target = 4;
-    
+
     // MultiplyBlock
     var RimINtensity = new MultiplyBlock("Rim INtensity");
     RimINtensity.visibleInInspector = false;
     RimINtensity.visibleOnFrame = false;
     RimINtensity.target = 4;
-    
+
     // PowBlock
     var RimFactor = new PowBlock("Rim Factor");
     RimFactor.visibleInInspector = false;
     RimFactor.visibleOnFrame = false;
     RimFactor.target = 4;
-    
+
     // InputBlock
     var RimIntensity = new InputBlock("Rim Intensity");
     RimIntensity.visibleInInspector = false;
@@ -548,13 +558,13 @@ export function toonImage(){
     RimIntensity.matrixMode = 0;
     RimIntensity.animationType = AnimatedInputBlockTypes.None;
     RimIntensity.isConstant = false;
-    
+
     // StepBlock
     var QuantizedRimLightIntensity = new StepBlock("Quantized Rim Light Intensity");
     QuantizedRimLightIntensity.visibleInInspector = false;
     QuantizedRimLightIntensity.visibleOnFrame = false;
     QuantizedRimLightIntensity.target = 4;
-    
+
     // InputBlock
     var RimCutoff = new InputBlock("Rim Cutoff");
     RimCutoff.visibleInInspector = false;
@@ -567,13 +577,13 @@ export function toonImage(){
     RimCutoff.matrixMode = 0;
     RimCutoff.animationType = AnimatedInputBlockTypes.None;
     RimCutoff.isConstant = false;
-    
+
     // ScaleBlock
     var Scale = new ScaleBlock("Scale");
     Scale.visibleInInspector = false;
     Scale.visibleOnFrame = false;
     Scale.target = 4;
-    
+
     // InputBlock
     var RimLightColor = new InputBlock("Rim Light Color");
     RimLightColor.visibleInInspector = false;
@@ -581,25 +591,25 @@ export function toonImage(){
     RimLightColor.target = 1;
     RimLightColor.value = new Color3(1, 1, 1);
     RimLightColor.isConstant = false;
-    
+
     // AddBlock
     var AddRimSpecDiffuseAmbient = new AddBlock("Add Rim + Spec + Diffuse + Ambient");
     AddRimSpecDiffuseAmbient.visibleInInspector = false;
     AddRimSpecDiffuseAmbient.visibleOnFrame = false;
     AddRimSpecDiffuseAmbient.target = 4;
-    
+
     // AddBlock
     var AddSpecularDiffuseAmbient = new AddBlock("Add Specular + Diffuse + Ambient");
     AddSpecularDiffuseAmbient.visibleInInspector = false;
     AddSpecularDiffuseAmbient.visibleOnFrame = false;
     AddSpecularDiffuseAmbient.target = 4;
-    
+
     // AddBlock
     var AddAmbienttoDiffuseLight = new AddBlock("Add Ambient to Diffuse Light");
     AddAmbienttoDiffuseLight.visibleInInspector = false;
     AddAmbienttoDiffuseLight.visibleOnFrame = false;
     AddAmbienttoDiffuseLight.target = 4;
-    
+
     // InputBlock
     var AmbientLightColor = new InputBlock("Ambient Light Color");
     AmbientLightColor.visibleInInspector = false;
@@ -607,13 +617,13 @@ export function toonImage(){
     AmbientLightColor.target = 1;
     AmbientLightColor.value = new Color3(0.1803921568627451, 0.1803921568627451, 0.1803921568627451);
     AmbientLightColor.isConstant = false;
-    
+
     // ScaleBlock
     var DiffuseLightCalculation = new ScaleBlock("Diffuse Light Calculation");
     DiffuseLightCalculation.visibleInInspector = false;
     DiffuseLightCalculation.visibleOnFrame = false;
     DiffuseLightCalculation.target = 4;
-    
+
     // InputBlock
     var DiffuseLightColor = new InputBlock("Diffuse Light Color");
     DiffuseLightColor.visibleInInspector = false;
@@ -621,13 +631,13 @@ export function toonImage(){
     DiffuseLightColor.target = 1;
     DiffuseLightColor.value = new Color3(0.6901960784313725, 0.6901960784313725, 0.6901960784313725);
     DiffuseLightColor.isConstant = false;
-    
+
     // StepBlock
     var QuantizedDiffuseLightIntensity = new StepBlock("Quantized Diffuse Light Intensity");
     QuantizedDiffuseLightIntensity.visibleInInspector = false;
     QuantizedDiffuseLightIntensity.visibleOnFrame = false;
     QuantizedDiffuseLightIntensity.target = 4;
-    
+
     // InputBlock
     var DiffuseCutoff = new InputBlock("Diffuse Cutoff");
     DiffuseCutoff.visibleInInspector = false;
@@ -640,37 +650,37 @@ export function toonImage(){
     DiffuseCutoff.matrixMode = 0;
     DiffuseCutoff.animationType = AnimatedInputBlockTypes.None;
     DiffuseCutoff.isConstant = false;
-    
+
     // MultiplyBlock
     var SpecularFactor = new MultiplyBlock("Specular Factor");
     SpecularFactor.visibleInInspector = false;
     SpecularFactor.visibleOnFrame = false;
     SpecularFactor.target = 4;
-    
+
     // DotBlock
     var NDotH = new DotBlock("N Dot H");
     NDotH.visibleInInspector = false;
     NDotH.visibleOnFrame = false;
     NDotH.target = 4;
-    
+
     // NormalizeBlock
     var HNormalized = new NormalizeBlock("H (Normalized)");
     HNormalized.visibleInInspector = false;
     HNormalized.visibleOnFrame = false;
     HNormalized.target = 4;
-    
+
     // PowBlock
     var SpecularIntensity = new PowBlock("Specular Intensity");
     SpecularIntensity.visibleInInspector = false;
     SpecularIntensity.visibleOnFrame = false;
     SpecularIntensity.target = 4;
-    
+
     // MultiplyBlock
     var Glossiness = new MultiplyBlock("Glossiness ^2");
     Glossiness.visibleInInspector = false;
     Glossiness.visibleOnFrame = false;
     Glossiness.target = 4;
-    
+
     // InputBlock
     var Glossiness1 = new InputBlock("Glossiness");
     Glossiness1.visibleInInspector = false;
@@ -683,13 +693,13 @@ export function toonImage(){
     Glossiness1.matrixMode = 0;
     Glossiness1.animationType = AnimatedInputBlockTypes.None;
     Glossiness1.isConstant = false;
-    
+
     // StepBlock
     var QuantizedSpecularIntensity = new StepBlock("Quantized Specular Intensity");
     QuantizedSpecularIntensity.visibleInInspector = false;
     QuantizedSpecularIntensity.visibleOnFrame = false;
     QuantizedSpecularIntensity.target = 4;
-    
+
     // InputBlock
     var SpecularCutoff = new InputBlock("Specular Cutoff");
     SpecularCutoff.visibleInInspector = false;
@@ -702,13 +712,13 @@ export function toonImage(){
     SpecularCutoff.matrixMode = 0;
     SpecularCutoff.animationType = AnimatedInputBlockTypes.None;
     SpecularCutoff.isConstant = false;
-    
+
     // ScaleBlock
     var CalculateSpecularLight = new ScaleBlock("Calculate Specular Light");
     CalculateSpecularLight.visibleInInspector = false;
     CalculateSpecularLight.visibleOnFrame = false;
     CalculateSpecularLight.target = 4;
-    
+
     // InputBlock
     var Color = new InputBlock("Color3");
     Color.visibleInInspector = false;
@@ -716,13 +726,13 @@ export function toonImage(){
     Color.target = 1;
     Color.value = new Color3(1, 1, 1);
     Color.isConstant = false;
-    
+
     // MultiplyBlock
     var MultiplyLightingbyColor = new MultiplyBlock("Multiply Lighting by Color");
     MultiplyLightingbyColor.visibleInInspector = false;
     MultiplyLightingbyColor.visibleOnFrame = false;
     MultiplyLightingbyColor.target = 4;
-    
+
     // TextureBlock
     var textura = new TextureBlock("Texture");
     textura.visibleInInspector = false;
@@ -738,7 +748,7 @@ export function toonImage(){
     uv.visibleOnFrame = false;
     uv.target = 1;
     uv.setAsAttribute("uv");
-    
+
     // FragmentOutputBlock
     var fragmentOutput = new FragmentOutputBlock("fragmentOutput");
     fragmentOutput.visibleInInspector = false;
@@ -747,7 +757,7 @@ export function toonImage(){
     fragmentOutput.convertToGammaSpace = undefined;
     fragmentOutput.convertToLinearSpace = undefined;
     fragmentOutput.useLogarithmicDepth = false;
-    
+
     // TransformBlock
     var worldPosviewProjectionTransform = new TransformBlock("worldPos * viewProjectionTransform");
     worldPosviewProjectionTransform.visibleInInspector = false;
@@ -755,20 +765,20 @@ export function toonImage(){
     worldPosviewProjectionTransform.target = 1;
     worldPosviewProjectionTransform.complementZ = 0;
     worldPosviewProjectionTransform.complementW = 1;
-    
+
     // InputBlock
     var viewProjection = new InputBlock("viewProjection");
     viewProjection.visibleInInspector = false;
     viewProjection.visibleOnFrame = false;
     viewProjection.target = 1;
     viewProjection.setAsSystemValue(NodeMaterialSystemValues.ViewProjection);
-    
+
     // VertexOutputBlock
     var vertexOutput = new VertexOutputBlock("vertexOutput");
     vertexOutput.visibleInInspector = false;
     vertexOutput.visibleOnFrame = false;
     vertexOutput.target = 1;
-    
+
     // Connections
     position.output.connectTo(worldPos.vector);
     world.output.connectTo(worldPos.transform);
@@ -826,11 +836,11 @@ export function toonImage(){
     uv.output.connectTo(textura.uv);
     textura.rgb.connectTo(MultiplyLightingbyColor.right);
     MultiplyLightingbyColor.output.connectTo(fragmentOutput.rgb);
-    
+
     // Output nodes
     nodeMaterial.addOutputNode(vertexOutput);
     nodeMaterial.addOutputNode(fragmentOutput);
     nodeMaterial.build();
-    
+
     return nodeMaterial
 }

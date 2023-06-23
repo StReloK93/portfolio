@@ -1,4 +1,4 @@
-import { Engine, Scene, ArcRotateCamera, Vector3, NodeMaterial, Color4, Color3, SceneLoader, PointLight, StandardMaterial, ShadowGenerator, DirectionalLight, PBRMaterial } from "@babylonjs/core"
+import { Engine, Scene, ArcRotateCamera, Vector3, HighlightLayer, Color4, Color3, SceneLoader, PointLight, StandardMaterial, ShadowGenerator, DirectionalLight, PBRMaterial } from "@babylonjs/core"
 import { toon, toonImage } from "./Materials/ToonMaterial"
 import "@babylonjs/materials"
 import "@babylonjs/loaders"
@@ -9,7 +9,7 @@ export function initScene(canvas) {
     const scene = new Scene(engine)
     scene.ambientColor = new Color3(1, 1, 1)
     scene.clearColor = new Color4(0.8, 0.8, 0.8, 1)
-
+    // scene.debugLayer.show()
     const camera = new ArcRotateCamera('camera', 1.5745, 1.5816, 6.8, new Vector3(0, 3.3, 0), scene)
     
     camera.attachControl(canvas, true)
@@ -29,26 +29,33 @@ export function initScene(canvas) {
     shadowGenerator.filteringQuality = ShadowGenerator.QUALITY_HIGH;
 
     SceneLoader.ImportMesh("", "/models/", "test.glb", scene, function (meshes, particleSystems, skeletons) {
-
+        
         meshes.forEach((mesh) => {
-
             if(mesh.name == 'window_glass') {
                 mesh.material.alpha = 0.3
                 mesh.material.transparencyMode = 2
             }
+            mesh.enableEdgesRendering();
+            mesh.edgesColor = new Color4(0, 0, 0, 1);
+            
             shadowGenerator.getShadowMap().renderList.push(mesh);
             mesh.receiveShadows = true
             const material = mesh.material as PBRMaterial
             if(material) material.ambientColor = new Color3(0.6,0.6,0.6)
+
         })
 
     });
+    
 
 
 
 
     engine.runRenderLoop(() => scene.render())
     addEventListener("resize", () => engine.resize())
+
+
+    return {engine,scene}
 }
 
 
